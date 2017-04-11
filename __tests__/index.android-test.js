@@ -1,4 +1,8 @@
-jest.mock('react-native-fs');
+jest.mock('react-native-fs', () => ({
+  writeFile: jest.fn(() => Promise.resolve()),
+  ExternalStorageDirectoryPath: 'package-path'
+}));
+
 import 'react-native';
 import React from 'react';
 import Index from '../index.android.js';
@@ -10,4 +14,5 @@ it('renders correctly', () => {
   const tree = renderer.create(
     <Index />
   );
+  expect(tree).toMatchSnapshot();
 });
